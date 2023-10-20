@@ -1,0 +1,11 @@
+Model Information:
+* title:	Combat Mech
+* source:	https://sketchfab.com/3d-models/combat-mech-f094955d64164f1cb232d4bdc0b753b5
+* author:	Preview_Tempest (https://sketchfab.com/Preview_Tempest)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Combat Mech" (https://sketchfab.com/3d-models/combat-mech-f094955d64164f1cb232d4bdc0b753b5) by Preview_Tempest (https://sketchfab.com/Preview_Tempest) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
