@@ -1,8 +1,9 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.138.0/examples/jsm/controls/OrbitControls.js';
+import { FontLoader } from 'https://unpkg.com/three@0.138.3/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'https://unpkg.com/three@0.138.3/examples/jsm/geometries/TextGeometry.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.138.1/examples/jsm/loaders/GLTFLoader.js';
 
 var TeamIsWhite = "true"
 
@@ -69,7 +70,7 @@ function CreateText(Text, Values) {
     let RotZ = Values.RotZ;
     let Color = Values.Color;
     const loader = new FontLoader();
-    loader.load('node_modules/three/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+    loader.load('https://unpkg.com/three@0.138.3/examples/fonts/helvetiker_regular.typeface.json', function (font) {
         const geometry = new TextGeometry(Text, {
             font: font,
             size: FontSize,
