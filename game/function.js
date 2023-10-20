@@ -5,6 +5,7 @@ import { FontLoader } from 'https://unpkg.com/three@0.138.3/examples/jsm/loaders
 import { TextGeometry } from 'https://unpkg.com/three@0.138.3/examples/jsm/geometries/TextGeometry.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.138.1/examples/jsm/loaders/GLTFLoader.js';
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyB0Ajt4HoWAs5BszqW0vhett0k4TZJZapc",
     authDomain: "chessaria2.firebaseapp.com",
@@ -53,7 +54,7 @@ GetTeam().then(function() {
 // FROM THIS POINT TeamIsWhite IS A VALID VARIABLE: ----------------------------------------------------------------------------------------------------------------------
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 30000);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -105,6 +106,18 @@ function loadGLTFModel(path, width, onLoad, onError) {
         });
     });
 }
+
+//create asteroid:
+loadGLTFModel("3d_models/asteroid.glb", 23, function (model) {
+    model.position.x = -0.5
+    model.position.z = -0.5
+    model.position.y = -10.8
+
+    model.rotation.y = (Math.PI*1.5)
+
+    model.userData.ObjectType = "DoNotDelete"
+    scene.add(model);
+})
 
 function autoScaleModelToWidth(model, desiredWidth) {
     // Calculate the current width of the model
@@ -268,14 +281,26 @@ var StartingGrid = [
 ]
 db.ref(`${GameCode}-Grid`).set(JSON.stringify(StartingGrid))
 
+let ambientLight = new THREE.AmbientLight(0xffffff, 2.5); // The first parameter is the light color, and the second is the light intensity.
+ambientLight.userData.ObjectType = "DoNotDelete"
+scene.add(ambientLight);
+
+let SkyboxType = "stars1"
+let sphereGeometry = new THREE.SphereGeometry(10000, 32, 32);
+let sphereTexture = new THREE.TextureLoader().load(`skyboxes/${SkyboxType}.png`);
+let sphereMaterial = new THREE.MeshBasicMaterial({ map: sphereTexture })
+sphereMaterial.side = THREE.BackSide
+let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.userData.ObjectType = "DoNotDelete"
+scene.add(sphere);
+
 // Grid renderer
 function RenderGrid(DontUpdate) {
     // delete old grid:
-    while(scene.children.length > 0){ 
-        scene.remove(scene.children[0]); 
+    let objectsToRemove = scene.children.slice()
+    for (let i = 0; i < objectsToRemove.length; i++) {
+        if (objectsToRemove[i].userData.ObjectType != "DoNotDelete") { scene.remove(objectsToRemove[i]);  }
     }
-    let ambientLight = new THREE.AmbientLight(0xffffff, 2); // The first parameter is the light color, and the second is the light intensity.
-    scene.add(ambientLight);
 
     // create new grid
     for (let z = 0; z < 10; z++) { //main grid
